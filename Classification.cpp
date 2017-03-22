@@ -19,6 +19,8 @@
 #include <stdexcept>
 #include <string>
 #include "myo.hpp"
+
+using namespace std;
 class DataCollector : public myo::DeviceListener {
 public:
     DataCollector()
@@ -45,18 +47,18 @@ public:
     void print()
     {
         // Clear the current line
-        std::cout << '\r';
+        cout << '\r';
         // Print out the EMG data.
         for (size_t i = 0; i < emgSamples.size(); i++) {
-            std::ostringstream oss;
+            ostringstream oss;
             oss << static_cast<int>(emgSamples[i]);
-            std::string emgString = oss.str();
-            std::cout << '[' << emgString << std::string(4 - emgString.size(), ' ') << ']';
+            string emgString = oss.str();
+            cout << '[' << emgString << string(4 - emgString.size(), ' ') << ']';
         }
-        std::cout << std::flush;
+        cout << flush;
     }
     // The values of this array is set by onEmgData() above.
-    std::array<int8_t, 8> emgSamples;
+    ::array<int8_t, 8> emgSamples;
 };
 int main(int argc, char** argv)
 {
@@ -65,7 +67,7 @@ int main(int argc, char** argv)
         // First, we create a Hub with our application identifier. Be sure not to use the com.example namespace when
         // publishing your application. The Hub provides access to one or more Myos.
         myo::Hub hub("com.example.emg-data-sample");
-        std::cout << "Attempting to find a Myo..." << std::endl;
+        cout << "Attempting to find a Myo..." << endl;
         // Next, we attempt to find a Myo to use. If a Myo is already paired in Myo Connect, this will return that Myo
         // immediately.
         // waitForMyo() takes a timeout value in milliseconds. In this case we will try to find a Myo for 10 seconds, and
@@ -73,10 +75,10 @@ int main(int argc, char** argv)
         myo::Myo* myo = hub.waitForMyo(10000);
         // If waitForMyo() returned a null pointer, we failed to find a Myo, so exit with an error message.
         if (!myo) {
-            throw std::runtime_error("Unable to find a Myo!");
+            throw runtime_error("Unable to find a Myo!");
         }
         // We've found a Myo.
-        std::cout << "Connected to a Myo armband!" << std::endl << std::endl;
+        cout << "Connected to a Myo armband!" << endl << endl;
         // Next we enable EMG streaming on the found Myo.
         myo->setStreamEmg(myo::Myo::streamEmgEnabled);
         // Next we construct an instance of our DeviceListener, so that we can register it with the Hub.
@@ -152,10 +154,10 @@ int main(int argc, char** argv)
                 cout << "Current Gesture: ";
         }
         // If a standard exception occurred, we print out its message and exit.
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        std::cerr << "Press enter to continue.";
-        std::cin.ignore();
+    } catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+        cerr << "Press enter to continue.";
+        cin.ignore();
         return 1;
     }
 }
