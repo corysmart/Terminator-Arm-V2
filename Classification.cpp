@@ -269,8 +269,6 @@ int main(int argc, char** argv)
 		//Exit:
 		/*std::cout << "Saving Data... " << std::endl;
 		system("cls");
-		std::cout << "\n       *****  Thank you for helping out HU Team Terminator!  *****\n\n";
-		std::cout << "                           From Ayo & Mark!           \n\n";
 		Sleep(3000);
 		return 0;*/
 
