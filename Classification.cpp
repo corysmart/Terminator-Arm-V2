@@ -1,25 +1,14 @@
-//
-//  Classification.cpp
-//  Terminator Arm
-//
-//  Created by Cory Bethrant
-//
-//
 
-//
-//  main.cpp
+//  Created by Cory Bethrant
 //  Terminator Arm V2
 //
 //  Copyright © 2017 Team Terminator. All rights reserved.
-//
-// 
-
 // Dependencies:
 // 1. MyoConnect
 // 2. Infile.txt (Containing dynamic final part of output data file)
 
 // Description:
-// This is used for testing/Demo with Calibration. The rest of the code for the project is separate from this.
+// This is used for testing/Demo with Machine Learning.
 // EMG streaming is only supported for one Myo at a time
 // Terminator Myo MAC address: db-fa-0c-69-14-78 (Can be used alternatively instead of MyoConnect to attach our Myo to a Hub)
 // http://diagnostics.myo.com/ provides diagnostic data of Myo (connected in MyoConnect) on a pc 
@@ -134,7 +123,7 @@ public:
 	// We define this function to calibrate our logged data
 	void calibrateData(){
 			system("cls"); std::cout << "\t\t Calibrating logged Data..." << std::endl;
-			// Data calibration approach/algorithm goes here
+			// Data calibration approach/ machine learning algorithm goes here
 			std::cout << "\t\t Calibration complete!" << std::endl;
 	}
 
