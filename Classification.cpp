@@ -139,7 +139,7 @@ public:
 			// Record data for 3 seconds
 			while (currentTime <= 3000)
 			{
-				// In each iteration of our main loop, we run the Myo event loop for a set number of milliseconds
+				// In each iteration of this loop, we run the Myo event loop for a set number of milliseconds
 				// In this case, we wish to update our display 50 times a second. (Myo provides EMG at 200Hz and IMU data at 50Hz and is unaffected by display rates)
 				hub.run(1);
 				//hub.runOnce();
