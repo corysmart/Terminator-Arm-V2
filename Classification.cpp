@@ -64,6 +64,7 @@ public:
 		// We've lost our Myo.
 		// Zeros are seen in output file if there was a disconnect so test can be repeated
 		emgSamples.fill(0);
+		bool restartCal = true;
 		onArm = false;
 	}
 
@@ -84,7 +85,7 @@ public:
 	// For this application, the functions overridden above are sufficient
 	std::string SerialIndex, update = "gesture";
 	std::ofstream TerminatorFile;
-	std::string filepath = "C:\\Users\\Ayotunde\\Google Drive\\Team Terminator\\Data Analysis\\EMGClassifierData\\TeamTerminatorData";
+	std::string filepath = "C:\\TeamTerminatorData";
 	int NewLineflag = 0;
 
 	// We define this function to write the current values that were updated by the on...() functions above
@@ -122,6 +123,36 @@ public:
 
 	// We define this function to calibrate our logged data
 	void calibrateData(){
+		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
+		std::cout << "\t Allow a couple seconds while Terminator Myo warms up to arm... " << std::endl << std::endl;
+		Sleep(5000);             // suspend execution of current/active thread for time-argument
+
+		for (int i = 0; i < sizeof(gestures) / sizeof(*gestures); i++){
+			system("cls");
+			std::cout << std::endl; std::cout << "\n\n\n \t\t Perform:  " << gestures[i] << " for (5) secs" << std::endl;
+
+			// Get current CPU time
+			double startTime = GetTickCount();
+			double currentTime = 0;
+
+			while ((GetTickCount() - startTime) <= 1000) {}; // wait for 1 extra sec for user change
+			// Record data for 3 seconds
+			while (currentTime <= 3000)
+			{
+				// In each iteration of our main loop, we run the Myo event loop for a set number of milliseconds
+				// In this case, we wish to update our display 50 times a second. (Myo provides EMG at 200Hz and IMU data at 50Hz and is unaffected by display rates)
+				hub.run(1);
+				//hub.runOnce();
+				//std::cout << "HUB running!" << std::endl;
+				// After processing events, we call the writeData() function to write new data to our outfile
+				collector.writeData(gestures[i]);
+				//std::cout << "Written data!" << std::endl;
+				// Update time for iteration purposes
+				currentTime = GetTickCount() - startTime;
+			}
+			while ((GetTickCount() - startTime) <= 5000) {}; // wait for 1 extra sec for user change
+		}
+
 			system("cls"); std::cout << "\t\t Calibrating logged Data..." << std::endl;
 			// Data calibration approach/ machine learning algorithm goes here
 			std::cout << "\t\t Calibration complete!" << std::endl;
@@ -150,7 +181,7 @@ int main(int argc, char** argv)
 	std::ifstream Serialfile;
 	Serialfile.open("Infile.txt");
 
-	// Define test gestures
+	// Define gestures
 	std::string gestures[12] = { "*REST/RELAX* position", "*(THUMB)* contraction", "*REST/RELAX* position", "*(INDEX fing.)* contraction", "*REST/RELAX* position",
 		"*(MIDDLE fing.)* contraction", "*REST/RELAX* position", "*(RING fing.)* contraction", "*REST/RELAX* position",
 		"*(PINKY fing.)* contraction", "*REST/RELAX* position", "*(HAND)* contraction" };
@@ -206,38 +237,8 @@ int main(int argc, char** argv)
 		wcscpy_s(cfi.FaceName, L"Consolas");
 		SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 		
-     // Recalibrate:
-		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
-		std::cout << "\t Allow a couple seconds while Terminator Myo warms up to arm... " << std::endl << std::endl;
-		Sleep(5000);             // suspend execution of current/active thread for time-argument
-
-		// Finally we enter our main loop.
-		for (int i = 0; i < sizeof(gestures) / sizeof(*gestures); i++){
-			system("cls");
-			std::cout << std::endl; std::cout << "\n\n\n \t\t Perform:  " << gestures[i] << " for (5) secs" << std::endl;
-
-			// Get current CPU time
-			double startTime = GetTickCount();
-			double currentTime = 0;
-
-			while ((GetTickCount() - startTime) <= 1000) {}; // wait for 1 extra sec for user change
-			// Record data for 3 seconds
-			while (currentTime <= 3000)
-			{
-				// In each iteration of our main loop, we run the Myo event loop for a set number of milliseconds
-				// In this case, we wish to update our display 50 times a second. (Myo provides EMG at 200Hz and IMU data at 50Hz and is unaffected by display rates)
-				hub.run(1);
-				//hub.runOnce();
-				//std::cout << "HUB running!" << std::endl;
-				// After processing events, we call the writeData() function to write new data to our outfile
-				collector.writeData(gestures[i]);
-				//std::cout << "Written data!" << std::endl;
-				// Update time for iteration purposes
-				currentTime = GetTickCount() - startTime;
-			}
-			while ((GetTickCount() - startTime) <= 5000) {}; // wait for 1 extra sec for user change
-		}
-
+     // Calibration:
+		collector.calibrateData();
 		// Data succesfully logged, start Calibration!
 		system("cls");
 		std::cout << "\n\n\n \t\t Now calibrating data..." << std::endl;
