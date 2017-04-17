@@ -140,6 +140,7 @@ public:
 			double currentTime = 0;
 
 			while ((GetTickCount() - startTime) <= 1000) {}; // wait for 1 extra sec for user change
+			
 			// Record data for 3 seconds
 			while (currentTime <= 3000)
 			{
