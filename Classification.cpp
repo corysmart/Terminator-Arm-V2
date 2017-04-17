@@ -93,7 +93,7 @@ public:
 	void writeData(std::string gesture)
 	{
 		//Open infile for reference data
-		TerminatorRefFile.open();
+		TerminatorRefFile.open("Reference.csv");
 		
 		// Create and open dynamic outfile 
 		std::string filename = filepath + SerialIndex + ".txt";
