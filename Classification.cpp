@@ -64,7 +64,7 @@ public:
 		// We've lost our Myo.
 		// Zeros are seen in output file if there was a disconnect so test can be repeated
 		emgSamples.fill(0);
-		bool restartCal = true;
+		bool restartCal = true;		//restarts if connection lost
 		onArm = false;
 	}
 
@@ -85,12 +85,16 @@ public:
 	// For this application, the functions overridden above are sufficient
 	std::string SerialIndex, update = "gesture";
 	std::ofstream TerminatorFile;
+	std::ifstream TerminatorRefFile;
 	std::string filepath = "C:\\TeamTerminatorData";
 	int NewLineflag = 0;
 
 	// We define this function to write the current values that were updated by the on...() functions above
 	void writeData(std::string gesture)
 	{
+		//Open infile for reference data
+		TerminatorRefFile.open();
+		
 		// Create and open dynamic outfile 
 		std::string filename = filepath + SerialIndex + ".txt";
 		TerminatorFile.open(filename, std::ofstream::app);
