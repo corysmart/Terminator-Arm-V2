@@ -27,6 +27,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 #include <fstream>
 #include "windows.h"   // contains Sleep library
 #include <time.h>
@@ -88,13 +89,19 @@ public:
 	std::ifstream TerminatorRefFile;
 	std::string filepath = "C:\\TeamTerminatorData";
 	int NewLineflag = 0;
+	vector<string> RefData_S (8);	//vector to store chars from infile, 8 pods
+	vector<int> RefData (8);	//vector to hold reference data, 8 pods
+	const int MAXSIZE = 4;		//reads in, at most, 4 characters
+    	char thisVal[MAXSIZE];		//char array to hold individual values from ref data
+	char new_line;	
+	int counter = 0;	//keeps track of how many additions occur (how many lines are processed per gesture)
+	double Pod1_avg, Pod2_avg, Pod_3_avg, Pod4_avg, Pod5_avg, Pod6_avg, Pod7_avg, Pod_8_avg = 0;//avg values for pods (per gesture)
+	double Rest_avg, Index_avg, Middle_avg, Ring_avg, Pinky_avg, Hand_avg = 0;	//avg values for gestures for calibration
+	
 
 	// We define this function to write the current values that were updated by the on...() functions above
 	void writeData(std::string gesture)
 	{
-		//Open infile for reference data
-		TerminatorRefFile.open("Reference.csv");
-		
 		// Create and open dynamic outfile 
 		std::string filename = filepath + SerialIndex + ".txt";
 		TerminatorFile.open(filename, std::ofstream::app);
@@ -127,6 +134,28 @@ public:
 
 	// We define this function to calibrate our logged data
 	void calibrateData(){
+		//Open infile for reference data
+		TerminatorRefFile.open("Reference.csv");
+		while(TerminatorRefFile.getline(new_line, 999,999, '*'){		//reads one gesture at a time
+			while(TerminatorRefFile.getline(new_line, 100, '/n'){		//reads one line at a time
+				for (int i=0; i<7; i++){				//8 values per line
+					while(TerminatorRefFile.getline(thisVal,MAXSIZE,',')) {	//reads in four chars, unless it hits a comma
+					RefData_S.at(i)=thisVal;	
+					RefData.at(i)=RefData.at(i)+std::stoi(RefData_S.at(i), &sz) //coverts string to int, adds columns to average pod values
+					}
+				}
+			counter++; //keeps track of how many additions occur (how many lines are processed per gesture)
+			}
+		Pod1_avg=RefData(0)/counter;		//calculates average pod values for given gesture
+		Pod2_avg=RefData(1)/counter;
+		Pod3_avg=RefData(2)/counter;
+		Pod4_avg=RefData(3)/counter;
+		Pod5_avg=RefData(4)/counter;
+		Pod6_avg=RefData(5)/counter;
+		Pod7_avg=RefData(6)/counter;
+		Pod8_avg=RefData(7)/counter;
+		}
+		
 		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
 		std::cout << "\t Allow a couple seconds while Terminator Myo warms up to arm... " << std::endl << std::endl;
 		Sleep(5000);             // suspend execution of current/active thread for time-argument
