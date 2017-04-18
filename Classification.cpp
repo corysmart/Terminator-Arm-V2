@@ -155,6 +155,7 @@ public:
 		Pod7_avg=RefData(6)/counter;
 		Pod8_avg=RefData(7)/counter;
 		}
+		//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
 		
 		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
 		std::cout << "\t Allow a couple seconds while Terminator Myo warms up to arm... " << std::endl << std::endl;
