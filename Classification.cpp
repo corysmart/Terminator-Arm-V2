@@ -274,26 +274,12 @@ public:
 		while (onArm){
 			system("cls");
 			std::cout << "Terminator Myo is still on arm!" << std::endl;
-			// Get current CPU time
-			double startTime = GetTickCount();
-			double currentTime = 0;
-
-			while ((GetTickCount() - startTime) <= 1000) {}; // wait for 1 extra sec for user change
-			
-			// Record data for 3 seconds
-			while (currentTime <= 3000)
-			{
-				// In each iteration of this loop, we run the Myo event loop for a set number of milliseconds
-				// In this case, we wish to update our display 50 times a second. (Myo provides EMG at 200Hz and IMU data at 50Hz and is unaffected by display rates)
-				hub.run(1);
-				//hub.runOnce();
-				//std::cout << "HUB running!" << std::endl;
-				// After processing events, we call the writeData() function to write new data to our outfile
-				collector.writeData(gestures[i]);
-				//std::cout << "Written data!" << std::endl;
-				// Update time for iteration purposes
-				currentTime = GetTickCount() - startTime;
-			} 
+			// Record data
+			hub.run(1);
+			//hub.runOnce();
+			//std::cout << "HUB running!" << std::endl;
+			// Data is now incoming
+			// Live Data Processing Goes Here
 		} 
 	}
 
