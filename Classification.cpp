@@ -158,10 +158,12 @@ public:
 		Pod7_avg=RefData.at(6)/counter;
 		Pod8_avg=RefData.at(7)/counter;
 		counter = 0;
+		
 		int temp_var;
 		double temp_var_sq;
-		vector<int> Variance_Data;	//vector to hold all of temp_var_sq (for variance)
-		
+		vector<int> Variance_Data (8);	//vector to hold all of temp_var_sq (for variance)
+	
+		//In this section, we caluclate the varinace for the 8 Pods
 		for(int x = 0; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
 			temp_var = RefData_Total.at(x)-Pod1_avg;
 			temp_var_sq = temp_var * temp_var;
@@ -170,8 +172,63 @@ public:
 			}
 			Pod1_var = Variance_Data.at(0)/counter;
 			counter = 0;
-			      
-		}
+		for(int x = 1; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 2)
+			temp_var = RefData_Total.at(x)-Pod2_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(1)=Variance_Data.at(1) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod2_var = Variance_Data.at(1)/counter;
+			counter = 0;
+		for(int x = 2; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 3)
+			temp_var = RefData_Total.at(x)-Pod3_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(2)=Variance_Data.at(2) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod3_var = Variance_Data.at(2)/counter;
+			counter = 0;
+		for(int x = 3; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 4)
+			temp_var = RefData_Total.at(x)-Pod4_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(3)=Variance_Data.at(3) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod4_var = Variance_Data.at(3)/counter;
+			counter = 0;
+		for(int x = 4; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 5)
+			temp_var = RefData_Total.at(x)-Pod5_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(4)=Variance_Data.at(4) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod5_var = Variance_Data.at(4)/counter;
+			counter = 0;
+		for(int x = 5; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 6)
+			temp_var = RefData_Total.at(x)-Pod6_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(5)=Variance_Data.at(5) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod6_var = Variance_Data.at(5)/counter;
+			counter = 0;
+		for(int x = 6; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 7)
+			temp_var = RefData_Total.at(x)-Pod7_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(6)=Variance_Data.at(6) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod7_var = Variance_Data.at(6)/counter;
+			counter = 0;
+		for(int x = 7; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 8)
+			temp_var = RefData_Total.at(x)-Pod8_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(7)=Variance_Data.at(7) + temp_var_sq;	
+			counter ++;		
+			}
+			Pod8_var = Variance_Data.at(7)/counter;
+			counter = 0;
+		}//end of a single gesture
 		//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
 		
 		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
