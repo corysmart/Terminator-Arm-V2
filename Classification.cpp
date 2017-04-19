@@ -354,17 +354,21 @@ int main(int argc, char** argv)
 		
      // Calibration:
 		collector.calibrateData();
-		// Data succesfully logged, start Calibration!
-		system("cls");
-		std::cout << "\n\n\n \t\t Now calibrating data..." << std::endl;
-		collector.calibrateData(); // Get general code working(User exceptions, sync test), use FANN/ openNN http://opennn.cimne.com/ , explore tics.
-
+		// Data succesfully logged
 		// Calibration complete! listen for gestures for as long as HUTerminator myo remains synced with arm
 		system("cls");
 		std::cout << "\n\n\n \t\t Now listening for gestures..." << std::endl;
 		collector.listenforGesture();
-
 		// Ask to re-calibrate, when re-connected to arm by same or subsequent user
+		string response;
+		cout << "Would You Like To Restart Calibration or Continue Listening?";
+		cin >> response;
+		if response = (Yes || YES || yes || y || Y){
+			collector.calibrateData();
+		}
+		else{
+		collector.listenforGesture();
+		}
 		system("cls");
 		std::cout << "\n\n\n \t\t Please re-calibrate Terminator Myo for best results!" << std::endl;
 		collector.holdState();
