@@ -98,7 +98,7 @@ public:
 	int counter = 0;	//keeps track of how many additions occur (how many lines are processed per gesture)
 	double Pod1_avg, Pod2_avg, Pod3_avg, Pod4_avg, Pod5_avg, Pod6_avg, Pod7_avg, Pod8_avg = 0;//avg values for pods (per gesture)
 	double Pod1_var, Pod2_var, Pod3_var, Pod4_var, Pod5_var, Pod6_var, Pod7_var, Pod8_var = 0;//variance for pods (per gesture) 
-	double Rest_avg, Index_avg, Middle_avg, Ring_avg, Pinky_avg, Hand_avg = 0;	//avg values for gestures for calibration
+	vector<double> Rest_avg(8,0), Index_avg(8,0), Middle_avg(8,0), Ring_avg(8,0) Pinky_avg(8,0), Hand_avg(8,0);	//avg values for gestures for calibration
 	
 
 	// We define this function to write the current values that were updated by the on...() functions above
@@ -230,6 +230,128 @@ public:
 			Pod8_var = Variance_Data.at(7)/counter;
 			counter = 0;
 		}//end of a single gesture
+		
+		//store avg and variance per gesture (for future access)
+		if (a=0){	//Gesture is first rest
+			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
+			Rest_avg.at(1) = Rest_avg.at(1) + Pod2_avg;
+			Rest_avg.at(2) = Rest_avg.at(2) + Pod3_avg;
+			Rest_avg.at(3) = Rest_avg.at(3) + Pod4_avg;
+			Rest_avg.at(4) = Rest_avg.at(4) + Pod5_avg;
+			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
+			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
+			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			}
+		else if (a=1){	//Gesture is thumb
+			Thumb_avg(0) = Thumb_avg.at(0) + Pod1_avg;
+			Thumb_avg(1) = Thumb_avg.at(1) + Pod1_avg;
+			Thumb_avg(2) = Thumb_avg.at(2) + Pod1_avg;
+			Thumb_avg(3) = Thumb_avg.at(3) + Pod1_avg;
+			Thumb_avg(4) = Thumb_avg.at(4) + Pod1_avg;
+			Thumb_avg(5) = Thumb_avg.at(5) + Pod1_avg;
+			Thumb_avg(6) = Thumb_avg.at(6) + Pod1_avg;
+			Thumb_avg(7) = Thumb_avg.at(7) + Pod1_avg;
+			}
+		else if (a=2){	//Gesture is rest
+			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
+			Rest_avg.at(1) = Rest_avg.at(1) + Pod2_avg;
+			Rest_avg.at(2) = Rest_avg.at(2) + Pod3_avg;
+			Rest_avg.at(3) = Rest_avg.at(3) + Pod4_avg;
+			Rest_avg.at(4) = Rest_avg.at(4) + Pod5_avg;
+			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
+			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
+			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			}
+		else if (a=3){	//Gesture is index
+			Index_avg.at(0) = Index_avg.at(0) + Pod1_avg;
+			Index_avg.at(1) = Index_avg.at(1) + Pod2_avg;
+			Index_avg.at(2) = Index_avg.at(2) + Pod3_avg;
+			Index_avg.at(3) = Index_avg.at(3) + Pod4_avg;
+			Index_avg.at(4) = Index_avg.at(4) + Pod5_avg;
+			Index_avg.at(5) = Index_avg.at(5) + Pod6_avg;
+			Index_avg.at(6) = Index_avg.at(6) + Pod7_avg;
+			Index_avg.at(7) = Index_avg.at(7) + Pod8_avg;
+			}
+		else if (a=4){	//Gesture is rest
+			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
+			Rest_avg.at(1) = Rest_avg.at(1) + Pod2_avg;
+			Rest_avg.at(2) = Rest_avg.at(2) + Pod3_avg;
+			Rest_avg.at(3) = Rest_avg.at(3) + Pod4_avg;
+			Rest_avg.at(4) = Rest_avg.at(4) + Pod5_avg;
+			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
+			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
+			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			}
+		else if (a=5){	//Gesture is middle
+			Middle_avg.at(0) = Middle_avg.at(0) + Pod1_avg;
+			Middle_avg.at(1) = Middle_avg.at(1) + Pod2_avg;
+			Middle_avg.at(2) = Middle_avg.at(2) + Pod3_avg;
+			Middle_avg.at(3) = Middle_avg.at(3) + Pod4_avg;
+			Middle_avg.at(4) = Middle_avg.at(4) + Pod5_avg;
+			Middle_avg.at(5) = Middle_avg.at(5) + Pod6_avg;
+			Middle_avg.at(6) = Middle_avg.at(6) + Pod7_avg;
+			Middle_avg.at(7) = Middle_avg.at(7) + Pod8_avg;
+			}
+		else if (a=6){	//Gesture is rest
+			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
+			Rest_avg.at(1) = Rest_avg.at(1) + Pod2_avg;
+			Rest_avg.at(2) = Rest_avg.at(2) + Pod3_avg;
+			Rest_avg.at(3) = Rest_avg.at(3) + Pod4_avg;
+			Rest_avg.at(4) = Rest_avg.at(4) + Pod5_avg;
+			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
+			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
+			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			}
+		else if (a=7){	//Gesture is ring
+			Ring_avg.at(0) = Ring_avg.at(0) + Pod1_avg;
+			Ring_avg.at(1) = Ring_avg.at(1) + Pod2_avg;
+			Ring_avg.at(2) = Ring_avg.at(2) + Pod3_avg;
+			Ring_avg.at(3) = Ring_avg.at(3) + Pod4_avg;
+			Ring_avg.at(4) = Ring_avg.at(4) + Pod5_avg;
+			Ring_avg.at(5) = Ring_avg.at(5) + Pod6_avg;
+			Ring_avg.at(6) = Ring_avg.at(6) + Pod7_avg;
+			Ring_avg.at(7) = Ring_avg.at(7) + Pod8_avg;
+			}
+		else if (a=8){	//Gesture is rest
+			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
+			Rest_avg.at(1) = Rest_avg.at(1) + Pod2_avg;
+			Rest_avg.at(2) = Rest_avg.at(2) + Pod3_avg;
+			Rest_avg.at(3) = Rest_avg.at(3) + Pod4_avg;
+			Rest_avg.at(4) = Rest_avg.at(4) + Pod5_avg;
+			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
+			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
+			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			}
+		else if (a=9){	//Gesture is pinky
+			Pinky_avg.at(0) = Pinky_avg.at(0) + Pod1_avg;
+			Pinky_avg.at(1) = Pinky_avg.at(1) + Pod2_avg;
+			Pinky_avg.at(2) = Pinky_avg.at(2) + Pod3_avg;
+			Pinky_avg.at(3) = Pinky_avg.at(3) + Pod4_avg;
+			Pinky_avg.at(4) = Pinky_avg.at(4) + Pod5_avg;
+			Pinky_avg.at(5) = Pinky_avg.at(5) + Pod6_avg;
+			Pinky_avg.at(6) = Pinky_avg.at(6) + Pod7_avg;
+			Pinky_avg.at(7) = Pinky_avg.at(7) + Pod8_avg;
+			}
+		else if (a=10){	//Gesture is rest
+			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
+			Rest_avg.at(1) = Rest_avg.at(1) + Pod2_avg;
+			Rest_avg.at(2) = Rest_avg.at(2) + Pod3_avg;
+			Rest_avg.at(3) = Rest_avg.at(3) + Pod4_avg;
+			Rest_avg.at(4) = Rest_avg.at(4) + Pod5_avg;
+			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
+			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
+			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			}
+		else if (a=11){	//Gesture is hand
+			Hand_avg.at(0) = Hand_avg.at(0) + Pod1_avg;
+			Hand_avg.at(1) = Hand_avg.at(1) + Pod2_avg;
+			Hand_avg.at(2) = Hand_avg.at(2) + Pod3_avg;
+			Hand_avg.at(3) = Hand_avg.at(3) + Pod4_avg;
+			Hand_avg.at(4) = Hand_avg.at(4) + Pod5_avg;
+			Hand_avg.at(5) = Hand_avg.at(5) + Pod6_avg;
+			Hand_avg.at(6) = Hand_avg.at(6) + Pod7_avg;
+			Hand_avg.at(7) = Hand_avg.at(7) + Pod8_avg;
+			}
 	}
 		//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
 		
