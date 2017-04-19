@@ -99,6 +99,7 @@ public:
 	double Pod1_avg, Pod2_avg, Pod3_avg, Pod4_avg, Pod5_avg, Pod6_avg, Pod7_avg, Pod8_avg = 0;//avg values for pods (per gesture)
 	double Pod1_var, Pod2_var, Pod3_var, Pod4_var, Pod5_var, Pod6_var, Pod7_var, Pod8_var = 0;//variance for pods (per gesture) 
 	vector<double> Rest_avg(8,0), Index_avg(8,0), Middle_avg(8,0), Ring_avg(8,0) Pinky_avg(8,0), Hand_avg(8,0);	//avg values for gestures for calibration
+	vector<double> Rest_var(8,0), Index_var(8,0), Middle_var(8,0), Ring_var(8,0) Pinky_var(8,0), Hand_var(8,0);	//avg values for variance gestures for calibration
 	
 
 	// We define this function to write the current values that were updated by the on...() functions above
@@ -241,6 +242,15 @@ public:
 			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
 			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
 			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			
+			Rest_var.at(0) = Rest_var.at(0) + Pod1_var;
+			Rest_var.at(1) = Rest_var.at(1) + Pod2_var;
+			Rest_var.at(2) = Rest_var.at(2) + Pod3_var;
+			Rest_var.at(3) = Rest_var.at(3) + Pod4_var;
+			Rest_var.at(4) = Rest_var.at(4) + Pod5_var;
+			Rest_var.at(5) = Rest_var.at(5) + Pod6_var;
+			Rest_var.at(6) = Rest_var.at(6) + Pod7_var;
+			Rest_var.at(7) = Rest_var.at(7) + Pod8_var;
 			}
 		else if (a=1){	//Gesture is thumb
 			Thumb_avg(0) = Thumb_avg.at(0) + Pod1_avg;
@@ -251,6 +261,15 @@ public:
 			Thumb_avg(5) = Thumb_avg.at(5) + Pod1_avg;
 			Thumb_avg(6) = Thumb_avg.at(6) + Pod1_avg;
 			Thumb_avg(7) = Thumb_avg.at(7) + Pod1_avg;
+			
+			Thumb_var.at(0) = Thumb_var.at(0) + Pod1_var;
+			Thumb_var.at(1) = Thumb_var.at(1) + Pod2_var;
+			Thumb_var.at(2) = Thumb_var.at(2) + Pod3_var;
+			Thumb_var.at(3) = Thumb_var.at(3) + Pod4_var;
+			Thumb_var.at(4) = Thumb_var.at(4) + Pod5_var;
+			Thumb_var.at(5) = Thumb_var.at(5) + Pod6_var;
+			Thumb_var.at(6) = Thumb_var.at(6) + Pod7_var;
+			Thumb_var.at(7) = Thumb_var.at(7) + Pod8_var;
 			}
 		else if (a=2){	//Gesture is rest
 			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
@@ -261,6 +280,15 @@ public:
 			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
 			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
 			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			
+			Rest_var.at(0) = Rest_var.at(0) + Pod1_var;
+			Rest_var.at(1) = Rest_var.at(1) + Pod2_var;
+			Rest_var.at(2) = Rest_var.at(2) + Pod3_var;
+			Rest_var.at(3) = Rest_var.at(3) + Pod4_var;
+			Rest_var.at(4) = Rest_var.at(4) + Pod5_var;
+			Rest_var.at(5) = Rest_var.at(5) + Pod6_var;
+			Rest_var.at(6) = Rest_var.at(6) + Pod7_var;
+			Rest_var.at(7) = Rest_var.at(7) + Pod8_var;
 			}
 		else if (a=3){	//Gesture is index
 			Index_avg.at(0) = Index_avg.at(0) + Pod1_avg;
@@ -271,6 +299,15 @@ public:
 			Index_avg.at(5) = Index_avg.at(5) + Pod6_avg;
 			Index_avg.at(6) = Index_avg.at(6) + Pod7_avg;
 			Index_avg.at(7) = Index_avg.at(7) + Pod8_avg;
+			
+			Index_var.at(0) = Index_var.at(0) + Pod1_var;
+			Index_var.at(1) = Index_var.at(1) + Pod2_var;
+			Index_var.at(2) = Index_var.at(2) + Pod3_var;
+			Index_var.at(3) = Index_var.at(3) + Pod4_var;
+			Index_var.at(4) = Index_var.at(4) + Pod5_var;
+			Index_var.at(5) = Index_var.at(5) + Pod6_var;
+			Index_var.at(6) = Index_var.at(6) + Pod7_var;
+			Index_var.at(7) = Index_var.at(7) + Pod8_var;
 			}
 		else if (a=4){	//Gesture is rest
 			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
@@ -281,6 +318,15 @@ public:
 			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
 			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
 			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			
+			Rest_var.at(0) = Rest_var.at(0) + Pod1_var;
+			Rest_var.at(1) = Rest_var.at(1) + Pod2_var;
+			Rest_var.at(2) = Rest_var.at(2) + Pod3_var;
+			Rest_var.at(3) = Rest_var.at(3) + Pod4_var;
+			Rest_var.at(4) = Rest_var.at(4) + Pod5_var;
+			Rest_var.at(5) = Rest_var.at(5) + Pod6_var;
+			Rest_var.at(6) = Rest_var.at(6) + Pod7_var;
+			Rest_var.at(7) = Rest_var.at(7) + Pod8_var;
 			}
 		else if (a=5){	//Gesture is middle
 			Middle_avg.at(0) = Middle_avg.at(0) + Pod1_avg;
@@ -291,6 +337,15 @@ public:
 			Middle_avg.at(5) = Middle_avg.at(5) + Pod6_avg;
 			Middle_avg.at(6) = Middle_avg.at(6) + Pod7_avg;
 			Middle_avg.at(7) = Middle_avg.at(7) + Pod8_avg;
+			
+			Middle_var.at(0) = Middle_var.at(0) + Pod1_var;
+			Middle_var.at(1) = Middle_var.at(1) + Pod2_var;
+			Middle_var.at(2) = Middle_var.at(2) + Pod3_var;
+			Middle_var.at(3) = Middle_var.at(3) + Pod4_var;
+			Middle_var.at(4) = Middle_var.at(4) + Pod5_var;
+			Middle_var.at(5) = Middle_var.at(5) + Pod6_var;
+			Middle_var.at(6) = Middle_var.at(6) + Pod7_var;
+			Middle_var.at(7) = Middle_var.at(7) + Pod8_var;
 			}
 		else if (a=6){	//Gesture is rest
 			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
@@ -301,6 +356,15 @@ public:
 			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
 			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
 			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			
+			Rest_var.at(0) = Rest_var.at(0) + Pod1_var;
+			Rest_var.at(1) = Rest_var.at(1) + Pod2_var;
+			Rest_var.at(2) = Rest_var.at(2) + Pod3_var;
+			Rest_var.at(3) = Rest_var.at(3) + Pod4_var;
+			Rest_var.at(4) = Rest_var.at(4) + Pod5_var;
+			Rest_var.at(5) = Rest_var.at(5) + Pod6_var;
+			Rest_var.at(6) = Rest_var.at(6) + Pod7_var;
+			Rest_var.at(7) = Rest_var.at(7) + Pod8_var;
 			}
 		else if (a=7){	//Gesture is ring
 			Ring_avg.at(0) = Ring_avg.at(0) + Pod1_avg;
@@ -311,6 +375,15 @@ public:
 			Ring_avg.at(5) = Ring_avg.at(5) + Pod6_avg;
 			Ring_avg.at(6) = Ring_avg.at(6) + Pod7_avg;
 			Ring_avg.at(7) = Ring_avg.at(7) + Pod8_avg;
+			
+			Ring_var.at(0) = Ring_var.at(0) + Pod1_var;
+			Ring_var.at(1) = Ring_var.at(1) + Pod2_var;
+			Ring_var.at(2) = Ring_var.at(2) + Pod3_var;
+			Ring_var.at(3) = Ring_var.at(3) + Pod4_var;
+			Ring_var.at(4) = Ring_var.at(4) + Pod5_var;
+			Ring_var.at(5) = Ring_var.at(5) + Pod6_var;
+			Ring_var.at(6) = Ring_var.at(6) + Pod7_var;
+			Ring_var.at(7) = Ring_var.at(7) + Pod8_var;
 			}
 		else if (a=8){	//Gesture is rest
 			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
@@ -321,6 +394,15 @@ public:
 			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
 			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
 			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			
+			Rest_var.at(0) = Rest_var.at(0) + Pod1_var;
+			Rest_var.at(1) = Rest_var.at(1) + Pod2_var;
+			Rest_var.at(2) = Rest_var.at(2) + Pod3_var;
+			Rest_var.at(3) = Rest_var.at(3) + Pod4_var;
+			Rest_var.at(4) = Rest_var.at(4) + Pod5_var;
+			Rest_var.at(5) = Rest_var.at(5) + Pod6_var;
+			Rest_var.at(6) = Rest_var.at(6) + Pod7_var;
+			Rest_var.at(7) = Rest_var.at(7) + Pod8_var;
 			}
 		else if (a=9){	//Gesture is pinky
 			Pinky_avg.at(0) = Pinky_avg.at(0) + Pod1_avg;
@@ -331,6 +413,15 @@ public:
 			Pinky_avg.at(5) = Pinky_avg.at(5) + Pod6_avg;
 			Pinky_avg.at(6) = Pinky_avg.at(6) + Pod7_avg;
 			Pinky_avg.at(7) = Pinky_avg.at(7) + Pod8_avg;
+			
+			Pinky_var.at(0) = Pinky_var.at(0) + Pod1_var;
+			Pinky_var.at(1) = Pinky_var.at(1) + Pod2_var;
+			Pinky_var.at(2) = Pinky_var.at(2) + Pod3_var;
+			Pinky_var.at(3) = Pinky_var.at(3) + Pod4_var;
+			Pinky_var.at(4) = Pinky_var.at(4) + Pod5_var;
+			Pinky_var.at(5) = Pinky_var.at(5) + Pod6_var;
+			Pinky_var.at(6) = Pinky_var.at(6) + Pod7_var;
+			Pinky_var.at(7) = Pinky_var.at(7) + Pod8_var;
 			}
 		else if (a=10){	//Gesture is rest
 			Rest_avg.at(0) = Rest_avg.at(0) + Pod1_avg;
@@ -341,6 +432,15 @@ public:
 			Rest_avg.at(5) = Rest_avg.at(5) + Pod6_avg;
 			Rest_avg.at(6) = Rest_avg.at(6) + Pod7_avg;
 			Rest_avg.at(7) = Rest_avg.at(7) + Pod8_avg;
+			
+			Rest_var.at(0) = Rest_var.at(0) + Pod1_var;
+			Rest_var.at(1) = Rest_var.at(1) + Pod2_var;
+			Rest_var.at(2) = Rest_var.at(2) + Pod3_var;
+			Rest_var.at(3) = Rest_var.at(3) + Pod4_var;
+			Rest_var.at(4) = Rest_var.at(4) + Pod5_var;
+			Rest_var.at(5) = Rest_var.at(5) + Pod6_var;
+			Rest_var.at(6) = Rest_var.at(6) + Pod7_var;
+			Rest_var.at(7) = Rest_var.at(7) + Pod8_var;
 			}
 		else if (a=11){	//Gesture is hand
 			Hand_avg.at(0) = Hand_avg.at(0) + Pod1_avg;
@@ -351,6 +451,15 @@ public:
 			Hand_avg.at(5) = Hand_avg.at(5) + Pod6_avg;
 			Hand_avg.at(6) = Hand_avg.at(6) + Pod7_avg;
 			Hand_avg.at(7) = Hand_avg.at(7) + Pod8_avg;
+			
+			Hand_var.at(0) = Hand_var.at(0) + Pod1_var;
+			Hand_var.at(1) = Hand_var.at(1) + Pod2_var;
+			Hand_var.at(2) = Hand_var.at(2) + Pod3_var;
+			Hand_var.at(3) = Hand_var.at(3) + Pod4_var;
+			Hand_var.at(4) = Hand_var.at(4) + Pod5_var;
+			Hand_var.at(5) = Hand_var.at(5) + Pod6_var;
+			Hand_var.at(6) = Hand_var.at(6) + Pod7_var;
+			Hand_var.at(7) = Hand_var.at(7) + Pod8_var;
 			}
 	}
 		//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
