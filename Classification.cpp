@@ -138,6 +138,7 @@ public:
 	void calibrateData(){
 		//Open infile for reference data
 		TerminatorRefFile.open("Reference.csv");
+	for (int a = 0; a < 12; a++){	//cycles through 12 different gestures (asterisks in file)
 		while(TerminatorRefFile.getline(new_line, 999,999, '*'){		//reads one gesture at a time
 			while(TerminatorRefFile.getline(new_line, 100, '/n'){		//reads one line at a time
 				for (int i=0; i<7; i++){				//8 values per line
@@ -229,6 +230,7 @@ public:
 			Pod8_var = Variance_Data.at(7)/counter;
 			counter = 0;
 		}//end of a single gesture
+	}
 		//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
 		
 		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
