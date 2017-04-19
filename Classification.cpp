@@ -90,12 +90,14 @@ public:
 	std::string filepath = "C:\\TeamTerminatorData";
 	int NewLineflag = 0;
 	vector<string> RefData_S (8);	//vector to store chars from infile, 8 pods
-	vector<int> RefData (8);	//vector to hold reference data, 8 pods
+	vector<int> RefData (8);	//vector to hold reference data (for average of 8 pods)
+	vector<int> RefData_Total;	//vector to hold all of reference data (for variance)
 	const int MAXSIZE = 4;		//reads in, at most, 4 characters
     	char thisVal[MAXSIZE];		//char array to hold individual values from ref data
 	char new_line;	
 	int counter = 0;	//keeps track of how many additions occur (how many lines are processed per gesture)
-	double Pod1_avg, Pod2_avg, Pod_3_avg, Pod4_avg, Pod5_avg, Pod6_avg, Pod7_avg, Pod_8_avg = 0;//avg values for pods (per gesture)
+	double Pod1_avg, Pod2_avg, Pod3_avg, Pod4_avg, Pod5_avg, Pod6_avg, Pod7_avg, Pod8_avg = 0;//avg values for pods (per gesture)
+	double Pod1_var, Pod2_var, Pod3_var, Pod4_var, Pod5_var, Pod6_var, Pod7_var, Pod8_var = 0;//variance for pods (per gesture) 
 	double Rest_avg, Index_avg, Middle_avg, Ring_avg, Pinky_avg, Hand_avg = 0;	//avg values for gestures for calibration
 	
 
@@ -142,18 +144,33 @@ public:
 					while(TerminatorRefFile.getline(thisVal,MAXSIZE,',')) {	//reads in four chars, unless it hits a comma
 					RefData_S.at(i)=thisVal;	
 					RefData.at(i)=RefData.at(i)+std::stoi(RefData_S.at(i), &sz) //coverts string to int, adds columns to average pod values
+					RefData_Total.pushback(std::stoi(RefData_S.at(i), &sz));    //adds each value to the end of RefData_Total vector
 					}
 				}
 			counter++; //keeps track of how many additions occur (how many lines are processed per gesture)
 			}
-		Pod1_avg=RefData(0)/counter;		//calculates average pod values for given gesture
-		Pod2_avg=RefData(1)/counter;
-		Pod3_avg=RefData(2)/counter;
-		Pod4_avg=RefData(3)/counter;
-		Pod5_avg=RefData(4)/counter;
-		Pod6_avg=RefData(5)/counter;
-		Pod7_avg=RefData(6)/counter;
-		Pod8_avg=RefData(7)/counter;
+		Pod1_avg=RefData.at(0)/counter;		//calculates average pod values for given gesture
+		Pod2_avg=RefData.at(1)/counter;
+		Pod3_avg=RefData.at(2)/counter;
+		Pod4_avg=RefData.at(3)/counter;
+		Pod5_avg=RefData.at(4)/counter;
+		Pod6_avg=RefData.at(5)/counter;
+		Pod7_avg=RefData.at(6)/counter;
+		Pod8_avg=RefData.at(7)/counter;
+		counter = 0;
+		int temp_var;
+		double temp_var_sq;
+		vector<int> Variance_Data;	//vector to hold all of temp_var_sq (for variance)
+		
+		for(int x = 0; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
+			temp_var = RefData_Total.at(x)-Pod1_avg;
+			temp_var_sq = temp_var * temp_var;
+			Variance_Data.at(0)=Variance_Data.at(0) + temp_var_sq;	//sums all temp_var_sq for Pod 1
+			counter ++;		//keeps track of how many additions occur (how many variances are added)
+			}
+			Pod1_var = Variance_Data.at(0)/counter;
+			counter = 0;
+			      
 		}
 		//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
 		
