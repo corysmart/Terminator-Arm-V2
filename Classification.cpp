@@ -863,7 +863,7 @@ public:
 			}
 		}
 	// We define this function for gesture recognition with calibration results as long as HUTerminator Myo is worn
-	void listenforGesture(){
+	void listenforGesture(vector<float> PodScaling){
 		while (onArm){
 			system("cls");
 			std::cout << "Terminator Myo is still on arm!" << std::endl;
@@ -889,13 +889,13 @@ public:
 			
 			while ( (nowTime <= 120000){	//listens for 2 minutes
 				while (pod_found = false){
-					collector.20_frames(beginTime, nowTime, pod_found);
+					collector.20_frames(beginTime, nowTime, pod_found, PodScaling);
 					}
 				while (pod_found = true){
 					collector.50_frames(beginTime, nowTime, pod_found, LiveData, LiveData_Total, LiveData_Var, 
 		       				LivePod1_avg, LivePod2_avg, LivePod3_avg, LivePod4_avg, LivePod5_avg , LivePod6_avg,
 		       				LivePod7_avg, LivePod8_avg, LivePod1_var, LivePod2_var, LivePod3_var, LivePod4_var, 
-		       				LivePod5_var, LivePod6_var, LivePod7_var, LivePod8_var, Livetemp, Livetemp_sq);
+		       				LivePod5_var, LivePod6_var, LivePod7_var, LivePod8_var, Livetemp, Livetemp_sq, PodScaling);
 					}
 				nowTime = GetTickCount() - beginTime;
 				} 
@@ -905,7 +905,7 @@ public:
 		while (!onArm){}
 		}
 
-	void 20_frames(beginTime, &nowTime, &pod_found){	//20 frame intervals (looking for active pods)
+	void 20_frames(beginTime, &nowTime, &pod_found, PodScaling){	//20 frame intervals (looking for active pods)
 		
 		//all variables have limited scope, because data is only recorded in 50 frame function
 		vector<int> LiveData (8,0)
@@ -919,7 +919,6 @@ public:
 		while (nowTime <= 4000 & pod_found = false){	
 			for (int i = 0; i < 8; i++) {
 				Quill = emg[i];
-				LiveData.at(i) = LiveData.at(i) + Quill;
 				LiveData_Total.pushback(Quill);
 				LiveData.at(i) = LiveData.at(i) + Quill;	//Pods summed 
 				avg_ticker++;
@@ -1001,14 +1000,14 @@ public:
 			LivePod8_var = LiveData_Var.at(7)/var_ticker;
 			var_ticker = 0;
 		
-		LiveData_Var.at(0) = LivePod1_var;
-		LiveData_Var.at(1) = LivePod2_var;
-		LiveData_Var.at(2) = LivePod3_var;
-		LiveData_Var.at(3) = LivePod4_var;
-		LiveData_Var.at(4) = LivePod5_var;
-		LiveData_Var.at(5) = LivePod6_var;
-		LiveData_Var.at(6) = LivePod7_var;
-		LiveData_Var.at(7) = LivePod8_var;
+		LiveData_Var.at(0) = LivePod1_var * PodScaling.at(0);
+		LiveData_Var.at(1) = LivePod2_var * PodScaling.at(1);
+		LiveData_Var.at(2) = LivePod3_var * PodScaling.at(2);
+		LiveData_Var.at(3) = LivePod4_var * PodScaling.at(3);
+		LiveData_Var.at(4) = LivePod5_var * PodScaling.at(4);
+		LiveData_Var.at(5) = LivePod6_var * PodScaling.at(5);
+		LiveData_Var.at(6) = LivePod7_var * PodScaling.at(6);
+		LiveData_Var.at(7) = LivePod8_var * PodScaling.at(7);
 				
 		for (int r=0; r <8; r++){
 			if (LiveData_Var.at(r) > 20){		//found active pod
@@ -1034,7 +1033,7 @@ public:
 	void 50_frames(beginTime, &nowTime, &pod_found, &LiveData, &LiveData_Total, &LiveData_Var, 
 		       &LivePod1_avg, &LivePod2_avg, &LivePod3_avg, &LivePod4_avg, &LivePod5_avg , &LivePod6_avg,
 		       &LivePod7_avg, &LivePod8_avg, &LivePod1_var, &LivePod2_var, &LivePod3_var, &LivePod4_var, 
-		       &LivePod5_var, &LivePod6_var, &LivePod7_var, &LivePod8_var, &Livetemp, &Livetemp_sq){
+		       &LivePod5_var, &LivePod6_var, &LivePod7_var, &LivePod8_var, &Livetemp, &Livetemp_sq, PodScaling){
 	//50 frame intervals (found active pods, recording data)
 	int Quill, avg_ticker, var_ticker, Livetemp, Livetemp_sq = 0;
 	while (nowTime <= 10000 & pod_found = true){
@@ -1121,14 +1120,14 @@ public:
 			LivePod8_var = LiveData_Var.at(7)/var_ticker;
 			var_ticker = 0;
 		
-		LiveData_Var.at(0) = LivePod1_var;
-		LiveData_Var.at(1) = LivePod2_var;
-		LiveData_Var.at(2) = LivePod3_var;
-		LiveData_Var.at(3) = LivePod4_var;
-		LiveData_Var.at(4) = LivePod5_var;
-		LiveData_Var.at(5) = LivePod6_var;
-		LiveData_Var.at(6) = LivePod7_var;
-		LiveData_Var.at(7) = LivePod8_var;
+		LiveData_Var.at(0) = LivePod1_var * PodScaling.at(0);
+		LiveData_Var.at(1) = LivePod2_var * PodScaling.at(1);
+		LiveData_Var.at(2) = LivePod3_var * PodScaling.at(2);
+		LiveData_Var.at(3) = LivePod4_var * PodScaling.at(3);
+		LiveData_Var.at(4) = LivePod5_var * PodScaling.at(4);
+		LiveData_Var.at(5) = LivePod6_var * PodScaling.at(5);
+		LiveData_Var.at(6) = LivePod7_var * PodScaling.at(6);
+		LiveData_Var.at(7) = LivePod8_var * PodScaling.at(7);
 		nowTime = GetTickCount() - beginTime;
 		}
 	}
@@ -1200,14 +1199,14 @@ int main(int argc, char** argv)
 		SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 		
      // Calibration:
+		vector<float> PodScaling (8,0.0);
 		collector.calibrateData();
 		// Data succesfully logged
 		// Calibration complete! listen for gestures for as long as HUTerminator myo remains synced with arm
 		system("cls");
-		vector<float> PodScaling (8,0.0);
 		collector.scaleData(&PodScaling);
 		std::cout << "\n\n\n \t\t Now listening for gestures..." << std::endl;
-		collector.listenforGesture();
+		collector.listenforGesture(PodScaling);
 		// Ask to re-calibrate, when re-connected to arm by same or subsequent user
 		string response;
 		cout << "Would You Like To Restart Calibration or Continue Listening?";
