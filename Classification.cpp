@@ -149,319 +149,321 @@ public:
 				while(TerminatorRefFile.getline(new_line, 100, '/n'){		//reads one line at a time
 					for (int i=0; i<7; i++){				//8 values per line
 						while(TerminatorRefFile.getline(thisVal,MAXSIZE,',')) {	//reads in four chars, unless it hits a comma
-						RefData_S.at(i)=thisVal;	
-						RefData.at(i)=RefData.at(i)+std::stoi(RefData_S.at(i), &sz) //coverts string to int, adds columns to average pod values
-						RefData_Total.pushback(std::stoi(RefData_S.at(i), &sz));    //adds each value to the end of RefData_Total vector
+							RefData_S.at(i)=thisVal;	
+							RefData.at(i)=RefData.at(i)+std::stoi(RefData_S.at(i), &sz) //coverts string to int, adds columns to average pod values
+							RefData_Total.pushback(std::stoi(RefData_S.at(i), &sz));    //adds each value to the end of RefData_Total vector
+							}
 						}
+					counter++; //keeps track of how many additions occur (how many lines are processed per gesture)
 					}
-				counter++; //keeps track of how many additions occur (how many lines are processed per gesture)
-				}
-			Pod1_avg=RefData.at(0)/counter;		//calculates average pod values for given gesture
-			Pod2_avg=RefData.at(1)/counter;
-			Pod3_avg=RefData.at(2)/counter;
-			Pod4_avg=RefData.at(3)/counter;
-			Pod5_avg=RefData.at(4)/counter;
-			Pod6_avg=RefData.at(5)/counter;
-			Pod7_avg=RefData.at(6)/counter;
-			Pod8_avg=RefData.at(7)/counter;
-			counter = 0;
+				Pod1_avg=RefData.at(0)/counter;		//calculates average pod values for given gesture
+				Pod2_avg=RefData.at(1)/counter;
+				Pod3_avg=RefData.at(2)/counter;
+				Pod4_avg=RefData.at(3)/counter;
+				Pod5_avg=RefData.at(4)/counter;
+				Pod6_avg=RefData.at(5)/counter;
+				Pod7_avg=RefData.at(6)/counter;
+				Pod8_avg=RefData.at(7)/counter;
+				counter = 0;
 
-			int temp_var;
-			double temp_var_sq;
-			vector<int> Variance_Data (8);	//vector to hold all of temp_var_sq (for variance)
+				int temp_var;
+				double temp_var_sq;
+				vector<int> Variance_Data (8);	//vector to hold all of temp_var_sq (for variance)
 
-			//In this section, we calculate the varinace for the 8 Pods
-			for(int x = 0; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
-				temp_var = RefData_Total.at(x)-Pod1_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(0)=Variance_Data.at(0) + temp_var_sq;	//sums all temp_var_sq for Pod 1
-				counter ++;		//keeps track of how many additions occur (how many variances are added)
-				}
-				Pod1_var = Variance_Data.at(0)/counter;
-				counter = 0;
-			for(int x = 1; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 2)
-				temp_var = RefData_Total.at(x)-Pod2_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(1)=Variance_Data.at(1) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod2_var = Variance_Data.at(1)/counter;
-				counter = 0;
-			for(int x = 2; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 3)
-				temp_var = RefData_Total.at(x)-Pod3_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(2)=Variance_Data.at(2) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod3_var = Variance_Data.at(2)/counter;
-				counter = 0;
-			for(int x = 3; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 4)
-				temp_var = RefData_Total.at(x)-Pod4_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(3)=Variance_Data.at(3) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod4_var = Variance_Data.at(3)/counter;
-				counter = 0;
-			for(int x = 4; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 5)
-				temp_var = RefData_Total.at(x)-Pod5_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(4)=Variance_Data.at(4) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod5_var = Variance_Data.at(4)/counter;
-				counter = 0;
-			for(int x = 5; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 6)
-				temp_var = RefData_Total.at(x)-Pod6_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(5)=Variance_Data.at(5) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod6_var = Variance_Data.at(5)/counter;
-				counter = 0;
-			for(int x = 6; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 7)
-				temp_var = RefData_Total.at(x)-Pod7_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(6)=Variance_Data.at(6) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod7_var = Variance_Data.at(6)/counter;
-				counter = 0;
-			for(int x = 7; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 8)
-				temp_var = RefData_Total.at(x)-Pod8_avg;
-				temp_var_sq = temp_var * temp_var;
-				Variance_Data.at(7)=Variance_Data.at(7) + temp_var_sq;	
-				counter ++;		
-				}
-				Pod8_var = Variance_Data.at(7)/counter;
-				counter = 0;
-			}//end of a single gesture
-
-			//store avg and variance per gesture (for future access)
-			if (a=0){	//Gesture is first rest
-				RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
-				RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
-				RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
-				RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
-				RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
-				RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
-				RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
-				RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
-				RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
-				RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
-				RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
-				RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
-				RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
-				RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
-				RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
-				RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
-				}
-			else if (a=1){	//Gesture is thumb
-				RefThumb_avg.at(0) = RefThumb_avg.at(0) + Pod1_avg;
-				RefThumb_avg.at(1) = RefThumb_avg.at(1) + Pod2_avg;
-				RefThumb_avg.at(2) = RefThumb_avg.at(2) + Pod3_avg;
-				RefThumb_avg.at(3) = RefThumb_avg.at(3) + Pod4_avg;
-				RefThumb_avg.at(4) = RefThumb_avg.at(4) + Pod5_avg;
-				RefThumb_avg.at(5) = RefThumb_avg.at(5) + Pod6_avg;
-				RefThumb_avg.at(6) = RefThumb_avg.at(6) + Pod7_avg;
-				RefThumb_avg.at(7) = RefThumb_avg.at(7) + Pod8_avg;
-				RefThumb_var.at(0) = RefThumb_var.at(0) + Pod1_var;
-				RefThumb_var.at(1) = RefThumb_var.at(1) + Pod2_var;
-				RefThumb_var.at(2) = RefThumb_var.at(2) + Pod3_var;
-				RefThumb_var.at(3) = RefThumb_var.at(3) + Pod4_var;
-				RefThumb_var.at(4) = RefThumb_var.at(4) + Pod5_var;
-				RefThumb_var.at(5) = RefThumb_var.at(5) + Pod6_var;
-				RefThumb_var.at(6) = RefThumb_var.at(6) + Pod7_var;
-				RefThumb_var.at(7) = RefThumb_var.at(7) + Pod8_var;
-				}
-			else if (a=2){	//Gesture is rest
-				RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
-				RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
-				RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
-				RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
-				RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
-				RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
-				RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
-				RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
-				RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
-				RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
-				RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
-				RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
-				RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
-				RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
-				RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
-				RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
-				}
-			else if (a=3){	//Gesture is index
-				RefIndex_avg.at(0) = RefIndex_avg.at(0) + Pod1_avg;
-				RefIndex_avg.at(1) = RefIndex_avg.at(1) + Pod2_avg;
-				RefIndex_avg.at(2) = RefIndex_avg.at(2) + Pod3_avg;
-				RefIndex_avg.at(3) = RefIndex_avg.at(3) + Pod4_avg;
-				RefIndex_avg.at(4) = RefIndex_avg.at(4) + Pod5_avg;
-				RefIndex_avg.at(5) = RefIndex_avg.at(5) + Pod6_avg;
-				RefIndex_avg.at(6) = RefIndex_avg.at(6) + Pod7_avg;
-				RefIndex_avg.at(7) = RefIndex_avg.at(7) + Pod8_avg;
-				RefIndex_var.at(0) = RefIndex_var.at(0) + Pod1_var;
-				RefIndex_var.at(1) = RefIndex_var.at(1) + Pod2_var;
-				RefIndex_var.at(2) = RefIndex_var.at(2) + Pod3_var;
-				RefIndex_var.at(3) = RefIndex_var.at(3) + Pod4_var;
-				RefIndex_var.at(4) = RefIndex_var.at(4) + Pod5_var;
-				RefIndex_var.at(5) = RefIndex_var.at(5) + Pod6_var;
-				RefIndex_var.at(6) = RefIndex_var.at(6) + Pod7_var;
-				RefIndex_var.at(7) = RefIndex_var.at(7) + Pod8_var;
-				}
-			else if (a=4){	//Gesture is rest
-				RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
-				RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
-				RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
-				RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
-				RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
-				RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
-				RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
-				RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
-				RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
-				RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
-				RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
-				RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
-				RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
-				RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
-				RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
-				RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
-				}
-			else if (a=5){	//Gesture is middle
-				RefMiddle_avg.at(0) = RefMiddle_avg.at(0) + Pod1_avg;
-				RefMiddle_avg.at(1) = RefMiddle_avg.at(1) + Pod2_avg;
-				RefMiddle_avg.at(2) = RefMiddle_avg.at(2) + Pod3_avg;
-				RefMiddle_avg.at(3) = RefMiddle_avg.at(3) + Pod4_avg;
-				RefMiddle_avg.at(4) = RefMiddle_avg.at(4) + Pod5_avg;
-				RefMiddle_avg.at(5) = RefMiddle_avg.at(5) + Pod6_avg;
-				RefMiddle_avg.at(6) = RefMiddle_avg.at(6) + Pod7_avg;
-				RefMiddle_avg.at(7) = RefMiddle_avg.at(7) + Pod8_avg;
-				RefMiddle_var.at(0) = RefMiddle_var.at(0) + Pod1_var;
-				RefMiddle_var.at(1) = RefMiddle_var.at(1) + Pod2_var;
-				RefMiddle_var.at(2) = RefMiddle_var.at(2) + Pod3_var;
-				RefMiddle_var.at(3) = RefMiddle_var.at(3) + Pod4_var;
-				RefMiddle_var.at(4) = RefMiddle_var.at(4) + Pod5_var;
-				RefMiddle_var.at(5) = RefMiddle_var.at(5) + Pod6_var;
-				RefMiddle_var.at(6) = RefMiddle_var.at(6) + Pod7_var;
-				RefMiddle_var.at(7) = RefMiddle_var.at(7) + Pod8_var;
-				}
-			else if (a=6){	//Gesture is rest
-				RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
-				RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
-				RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
-				RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
-				RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
-				RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
-				RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
-				RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
-				RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
-				RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
-				RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
-				RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
-				RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
-				RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
-				RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
-				RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
-				}
-			else if (a=7){	//Gesture is ring
-				RefRing_avg.at(0) = RefRing_avg.at(0) + Pod1_avg;
-				RefRing_avg.at(1) = RefRing_avg.at(1) + Pod2_avg;
-				RefRing_avg.at(2) = RefRing_avg.at(2) + Pod3_avg;
-				RefRing_avg.at(3) = RefRing_avg.at(3) + Pod4_avg;
-				RefRing_avg.at(4) = RefRing_avg.at(4) + Pod5_avg;
-				RefRing_avg.at(5) = RefRing_avg.at(5) + Pod6_avg;
-				RefRing_avg.at(6) = RefRing_avg.at(6) + Pod7_avg;
-				RefRing_avg.at(7) = RefRing_avg.at(7) + Pod8_avg;
-				RefRing_var.at(0) = RefRing_var.at(0) + Pod1_var;
-				RefRing_var.at(1) = RefRing_var.at(1) + Pod2_var;
-				RefRing_var.at(2) = RefRing_var.at(2) + Pod3_var;
-				RefRing_var.at(3) = RefRing_var.at(3) + Pod4_var;
-				RefRing_var.at(4) = RefRing_var.at(4) + Pod5_var;
-				RefRing_var.at(5) = RefRing_var.at(5) + Pod6_var;
-				RefRing_var.at(6) = RefRing_var.at(6) + Pod7_var;
-				RefRing_var.at(7) = RefRing_var.at(7) + Pod8_var;
-				}
-			else if (a=8){	//Gesture is rest
-				RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
-				RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
-				RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
-				RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
-				RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
-				RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
-				RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
-				RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
-				RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
-				RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
-				RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
-				RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
-				RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
-				RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
-				RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
-				RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
-				}
-			else if (a=9){	//Gesture is pinky
-				RefPinky_avg.at(0) = RefPinky_avg.at(0) + Pod1_avg;
-				RefPinky_avg.at(1) = RefPinky_avg.at(1) + Pod2_avg;
-				RefPinky_avg.at(2) = RefPinky_avg.at(2) + Pod3_avg;
-				RefPinky_avg.at(3) = RefPinky_avg.at(3) + Pod4_avg;
-				RefPinky_avg.at(4) = RefPinky_avg.at(4) + Pod5_avg;
-				RefPinky_avg.at(5) = RefPinky_avg.at(5) + Pod6_avg;
-				RefPinky_avg.at(6) = RefPinky_avg.at(6) + Pod7_avg;
-				RefPinky_avg.at(7) = RefPinky_avg.at(7) + Pod8_avg;
-				RefPinky_var.at(0) = RefPinky_var.at(0) + Pod1_var;
-				RefPinky_var.at(1) = RefPinky_var.at(1) + Pod2_var;
-				RefPinky_var.at(2) = RefPinky_var.at(2) + Pod3_var;
-				RefPinky_var.at(3) = RefPinky_var.at(3) + Pod4_var;
-				RefPinky_var.at(4) = RefPinky_var.at(4) + Pod5_var;
-				RefPinky_var.at(5) = RefPinky_var.at(5) + Pod6_var;
-				RefPinky_var.at(6) = RefPinky_var.at(6) + Pod7_var;
-				RefPinky_var.at(7) = RefPinky_var.at(7) + Pod8_var;
-				}
-			else if (a=10){	//Gesture is rest
-				RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
-				RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
-				RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
-				RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
-				RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
-				RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
-				RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
-				RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
-				RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
-				RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
-				RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
-				RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
-				RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
-				RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
-				RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
-				RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
-				}
-			else if (a=11){	//Gesture is hand
-				RefHand_avg.at(0) = RefHand_avg.at(0) + Pod1_avg;
-				RefHand_avg.at(1) = RefHand_avg.at(1) + Pod2_avg;
-				RefHand_avg.at(2) = RefHand_avg.at(2) + Pod3_avg;
-				RefHand_avg.at(3) = RefHand_avg.at(3) + Pod4_avg;
-				RefHand_avg.at(4) = RefHand_avg.at(4) + Pod5_avg;
-				RefHand_avg.at(5) = RefHand_avg.at(5) + Pod6_avg;
-				RefHand_avg.at(6) = RefHand_avg.at(6) + Pod7_avg;
-				RefHand_avg.at(7) = RefHand_avg.at(7) + Pod8_avg;
-				RefHand_var.at(0) = RefHand_var.at(0) + Pod1_var;
-				RefHand_var.at(1) = RefHand_var.at(1) + Pod2_var;
-				RefHand_var.at(2) = RefHand_var.at(2) + Pod3_var;
-				RefHand_var.at(3) = RefHand_var.at(3) + Pod4_var;
-				RefHand_var.at(4) = RefHand_var.at(4) + Pod5_var;
-				RefHand_var.at(5) = RefHand_var.at(5) + Pod6_var;
-				RefHand_var.at(6) = RefHand_var.at(6) + Pod7_var;
-				RefHand_var.at(7) = RefHand_var.at(7) + Pod8_var;
-				}
+				//In this section, we calculate the varinace for the 8 Pods
+				for(int x = 0; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
+					temp_var = RefData_Total.at(x)-Pod1_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(0)=Variance_Data.at(0) + temp_var_sq;	//sums all temp_var_sq for Pod 1
+					counter ++;		//keeps track of how many additions occur (how many variances are added)
+					}
+					Pod1_var = Variance_Data.at(0)/counter;
+					counter = 0;
+				for(int x = 1; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 2)
+					temp_var = RefData_Total.at(x)-Pod2_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(1)=Variance_Data.at(1) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod2_var = Variance_Data.at(1)/counter;
+					counter = 0;
+				for(int x = 2; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 3)
+					temp_var = RefData_Total.at(x)-Pod3_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(2)=Variance_Data.at(2) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod3_var = Variance_Data.at(2)/counter;
+					counter = 0;
+				for(int x = 3; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 4)
+					temp_var = RefData_Total.at(x)-Pod4_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(3)=Variance_Data.at(3) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod4_var = Variance_Data.at(3)/counter;
+					counter = 0;
+				for(int x = 4; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 5)
+					temp_var = RefData_Total.at(x)-Pod5_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(4)=Variance_Data.at(4) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod5_var = Variance_Data.at(4)/counter;
+					counter = 0;
+				for(int x = 5; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 6)
+					temp_var = RefData_Total.at(x)-Pod6_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(5)=Variance_Data.at(5) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod6_var = Variance_Data.at(5)/counter;
+					counter = 0;
+				for(int x = 6; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 7)
+					temp_var = RefData_Total.at(x)-Pod7_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(6)=Variance_Data.at(6) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod7_var = Variance_Data.at(6)/counter;
+					counter = 0;
+				for(int x = 7; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 8)
+					temp_var = RefData_Total.at(x)-Pod8_avg;
+					temp_var_sq = temp_var * temp_var;
+					Variance_Data.at(7)=Variance_Data.at(7) + temp_var_sq;	
+					counter ++;		
+					}
+					Pod8_var = Variance_Data.at(7)/counter;
+					counter = 0;
+				
+				//store avg and variance per gesture (for future access)
+				if (a=0){	//Gesture is first rest
+					RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
+					RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
+					RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
+					RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
+					RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
+					RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
+					RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
+					RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
+					RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
+					RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
+					RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
+					RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
+					RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
+					RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
+					RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
+					RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
+					}
+				else if (a=1){	//Gesture is thumb
+					RefThumb_avg.at(0) = RefThumb_avg.at(0) + Pod1_avg;
+					RefThumb_avg.at(1) = RefThumb_avg.at(1) + Pod2_avg;
+					RefThumb_avg.at(2) = RefThumb_avg.at(2) + Pod3_avg;
+					RefThumb_avg.at(3) = RefThumb_avg.at(3) + Pod4_avg;
+					RefThumb_avg.at(4) = RefThumb_avg.at(4) + Pod5_avg;
+					RefThumb_avg.at(5) = RefThumb_avg.at(5) + Pod6_avg;
+					RefThumb_avg.at(6) = RefThumb_avg.at(6) + Pod7_avg;
+					RefThumb_avg.at(7) = RefThumb_avg.at(7) + Pod8_avg;
+					RefThumb_var.at(0) = RefThumb_var.at(0) + Pod1_var;
+					RefThumb_var.at(1) = RefThumb_var.at(1) + Pod2_var;
+					RefThumb_var.at(2) = RefThumb_var.at(2) + Pod3_var;
+					RefThumb_var.at(3) = RefThumb_var.at(3) + Pod4_var;
+					RefThumb_var.at(4) = RefThumb_var.at(4) + Pod5_var;
+					RefThumb_var.at(5) = RefThumb_var.at(5) + Pod6_var;
+					RefThumb_var.at(6) = RefThumb_var.at(6) + Pod7_var;
+					RefThumb_var.at(7) = RefThumb_var.at(7) + Pod8_var;
+					}
+				else if (a=2){	//Gesture is rest
+					RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
+					RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
+					RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
+					RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
+					RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
+					RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
+					RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
+					RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
+					RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
+					RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
+					RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
+					RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
+					RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
+					RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
+					RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
+					RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
+					}
+				else if (a=3){	//Gesture is index
+					RefIndex_avg.at(0) = RefIndex_avg.at(0) + Pod1_avg;
+					RefIndex_avg.at(1) = RefIndex_avg.at(1) + Pod2_avg;
+					RefIndex_avg.at(2) = RefIndex_avg.at(2) + Pod3_avg;
+					RefIndex_avg.at(3) = RefIndex_avg.at(3) + Pod4_avg;
+					RefIndex_avg.at(4) = RefIndex_avg.at(4) + Pod5_avg;
+					RefIndex_avg.at(5) = RefIndex_avg.at(5) + Pod6_avg;
+					RefIndex_avg.at(6) = RefIndex_avg.at(6) + Pod7_avg;
+					RefIndex_avg.at(7) = RefIndex_avg.at(7) + Pod8_avg;
+					RefIndex_var.at(0) = RefIndex_var.at(0) + Pod1_var;
+					RefIndex_var.at(1) = RefIndex_var.at(1) + Pod2_var;
+					RefIndex_var.at(2) = RefIndex_var.at(2) + Pod3_var;
+					RefIndex_var.at(3) = RefIndex_var.at(3) + Pod4_var;
+					RefIndex_var.at(4) = RefIndex_var.at(4) + Pod5_var;
+					RefIndex_var.at(5) = RefIndex_var.at(5) + Pod6_var;
+					RefIndex_var.at(6) = RefIndex_var.at(6) + Pod7_var;
+					RefIndex_var.at(7) = RefIndex_var.at(7) + Pod8_var;
+					}
+				else if (a=4){	//Gesture is rest
+					RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
+					RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
+					RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
+					RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
+					RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
+					RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
+					RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
+					RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
+					RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
+					RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
+					RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
+					RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
+					RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
+					RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
+					RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
+					RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
+					}
+				else if (a=5){	//Gesture is middle
+					RefMiddle_avg.at(0) = RefMiddle_avg.at(0) + Pod1_avg;
+					RefMiddle_avg.at(1) = RefMiddle_avg.at(1) + Pod2_avg;
+					RefMiddle_avg.at(2) = RefMiddle_avg.at(2) + Pod3_avg;
+					RefMiddle_avg.at(3) = RefMiddle_avg.at(3) + Pod4_avg;
+					RefMiddle_avg.at(4) = RefMiddle_avg.at(4) + Pod5_avg;
+					RefMiddle_avg.at(5) = RefMiddle_avg.at(5) + Pod6_avg;
+					RefMiddle_avg.at(6) = RefMiddle_avg.at(6) + Pod7_avg;
+					RefMiddle_avg.at(7) = RefMiddle_avg.at(7) + Pod8_avg;
+					RefMiddle_var.at(0) = RefMiddle_var.at(0) + Pod1_var;
+					RefMiddle_var.at(1) = RefMiddle_var.at(1) + Pod2_var;
+					RefMiddle_var.at(2) = RefMiddle_var.at(2) + Pod3_var;
+					RefMiddle_var.at(3) = RefMiddle_var.at(3) + Pod4_var;
+					RefMiddle_var.at(4) = RefMiddle_var.at(4) + Pod5_var;
+					RefMiddle_var.at(5) = RefMiddle_var.at(5) + Pod6_var;
+					RefMiddle_var.at(6) = RefMiddle_var.at(6) + Pod7_var;
+					RefMiddle_var.at(7) = RefMiddle_var.at(7) + Pod8_var;
+					}
+				else if (a=6){	//Gesture is rest
+					RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
+					RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
+					RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
+					RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
+					RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
+					RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
+					RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
+					RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
+					RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
+					RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
+					RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
+					RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
+					RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
+					RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
+					RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
+					RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
+					}
+				else if (a=7){	//Gesture is ring
+					RefRing_avg.at(0) = RefRing_avg.at(0) + Pod1_avg;
+					RefRing_avg.at(1) = RefRing_avg.at(1) + Pod2_avg;
+					RefRing_avg.at(2) = RefRing_avg.at(2) + Pod3_avg;
+					RefRing_avg.at(3) = RefRing_avg.at(3) + Pod4_avg;
+					RefRing_avg.at(4) = RefRing_avg.at(4) + Pod5_avg;
+					RefRing_avg.at(5) = RefRing_avg.at(5) + Pod6_avg;
+					RefRing_avg.at(6) = RefRing_avg.at(6) + Pod7_avg;
+					RefRing_avg.at(7) = RefRing_avg.at(7) + Pod8_avg;
+					RefRing_var.at(0) = RefRing_var.at(0) + Pod1_var;
+					RefRing_var.at(1) = RefRing_var.at(1) + Pod2_var;
+					RefRing_var.at(2) = RefRing_var.at(2) + Pod3_var;
+					RefRing_var.at(3) = RefRing_var.at(3) + Pod4_var;
+					RefRing_var.at(4) = RefRing_var.at(4) + Pod5_var;
+					RefRing_var.at(5) = RefRing_var.at(5) + Pod6_var;
+					RefRing_var.at(6) = RefRing_var.at(6) + Pod7_var;
+					RefRing_var.at(7) = RefRing_var.at(7) + Pod8_var;
+					}
+				else if (a=8){	//Gesture is rest
+					RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
+					RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
+					RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
+					RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
+					RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
+					RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
+					RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
+					RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
+					RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
+					RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
+					RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
+					RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
+					RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
+					RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
+					RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
+					RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
+					}
+				else if (a=9){	//Gesture is pinky
+					RefPinky_avg.at(0) = RefPinky_avg.at(0) + Pod1_avg;
+					RefPinky_avg.at(1) = RefPinky_avg.at(1) + Pod2_avg;
+					RefPinky_avg.at(2) = RefPinky_avg.at(2) + Pod3_avg;
+					RefPinky_avg.at(3) = RefPinky_avg.at(3) + Pod4_avg;
+					RefPinky_avg.at(4) = RefPinky_avg.at(4) + Pod5_avg;
+					RefPinky_avg.at(5) = RefPinky_avg.at(5) + Pod6_avg;
+					RefPinky_avg.at(6) = RefPinky_avg.at(6) + Pod7_avg;
+					RefPinky_avg.at(7) = RefPinky_avg.at(7) + Pod8_avg;
+					RefPinky_var.at(0) = RefPinky_var.at(0) + Pod1_var;
+					RefPinky_var.at(1) = RefPinky_var.at(1) + Pod2_var;
+					RefPinky_var.at(2) = RefPinky_var.at(2) + Pod3_var;
+					RefPinky_var.at(3) = RefPinky_var.at(3) + Pod4_var;
+					RefPinky_var.at(4) = RefPinky_var.at(4) + Pod5_var;
+					RefPinky_var.at(5) = RefPinky_var.at(5) + Pod6_var;
+					RefPinky_var.at(6) = RefPinky_var.at(6) + Pod7_var;
+					RefPinky_var.at(7) = RefPinky_var.at(7) + Pod8_var;
+					}
+				else if (a=10){	//Gesture is rest
+					RefRest_avg.at(0) = RefRest_avg.at(0) + Pod1_avg;
+					RefRest_avg.at(1) = RefRest_avg.at(1) + Pod2_avg;
+					RefRest_avg.at(2) = RefRest_avg.at(2) + Pod3_avg;
+					RefRest_avg.at(3) = RefRest_avg.at(3) + Pod4_avg;
+					RefRest_avg.at(4) = RefRest_avg.at(4) + Pod5_avg;
+					RefRest_avg.at(5) = RefRest_avg.at(5) + Pod6_avg;
+					RefRest_avg.at(6) = RefRest_avg.at(6) + Pod7_avg;
+					RefRest_avg.at(7) = RefRest_avg.at(7) + Pod8_avg;
+					RefRest_var.at(0) = RefRest_var.at(0) + Pod1_var;
+					RefRest_var.at(1) = RefRest_var.at(1) + Pod2_var;
+					RefRest_var.at(2) = RefRest_var.at(2) + Pod3_var;
+					RefRest_var.at(3) = RefRest_var.at(3) + Pod4_var;
+					RefRest_var.at(4) = RefRest_var.at(4) + Pod5_var;
+					RefRest_var.at(5) = RefRest_var.at(5) + Pod6_var;
+					RefRest_var.at(6) = RefRest_var.at(6) + Pod7_var;
+					RefRest_var.at(7) = RefRest_var.at(7) + Pod8_var;
+					}
+				else if (a=11){	//Gesture is hand
+					RefHand_avg.at(0) = RefHand_avg.at(0) + Pod1_avg;
+					RefHand_avg.at(1) = RefHand_avg.at(1) + Pod2_avg;
+					RefHand_avg.at(2) = RefHand_avg.at(2) + Pod3_avg;
+					RefHand_avg.at(3) = RefHand_avg.at(3) + Pod4_avg;
+					RefHand_avg.at(4) = RefHand_avg.at(4) + Pod5_avg;
+					RefHand_avg.at(5) = RefHand_avg.at(5) + Pod6_avg;
+					RefHand_avg.at(6) = RefHand_avg.at(6) + Pod7_avg;
+					RefHand_avg.at(7) = RefHand_avg.at(7) + Pod8_avg;
+					RefHand_var.at(0) = RefHand_var.at(0) + Pod1_var;
+					RefHand_var.at(1) = RefHand_var.at(1) + Pod2_var;
+					RefHand_var.at(2) = RefHand_var.at(2) + Pod3_var;
+					RefHand_var.at(3) = RefHand_var.at(3) + Pod4_var;
+					RefHand_var.at(4) = RefHand_var.at(4) + Pod5_var;
+					RefHand_var.at(5) = RefHand_var.at(5) + Pod6_var;
+					RefHand_var.at(6) = RefHand_var.at(6) + Pod7_var;
+					RefHand_var.at(7) = RefHand_var.at(7) + Pod8_var;
+					}
+				}//end of a single gesture
 		}
 			//TerminatorRefFile.close();		not sure if this should go here, because reopening it would start reading from beginning again
 		
+		//end building reference data
+		//begin building user data for scale
 		std::cout << "\tPlease follow the instructions to perform CALIBRATION!" << std::endl;
 		std::cout << "\t Allow a couple seconds while Terminator Myo warms up to arm... " << std::endl << std::endl;
 		Sleep(5000);             // suspend execution of current/active thread for time-argument
 
-		for (int i = 0; i < sizeof(gestures) / sizeof(*gestures); i++){
+		for (int i = 0; i < sizeof(gestures) / sizeof(*gestures); i++){		//cycles through all 7 seven gestures
 			system("cls");
 			std::cout << std::endl; std::cout << "\n\n\n \t\t Perform:  " << gestures[i] << " for (5) secs" << std::endl;
 
@@ -472,21 +474,20 @@ public:
 			while ((GetTickCount() - startTime) <= 1000) {}; // wait for 1 extra sec for user change
 			
 			// Record data for 3 seconds
-			while (currentTime <= 3000)
-			{
+			while (currentTime <= 3000){
 				// In each iteration of this loop, we run the Myo event loop for a set number of milliseconds
 				// In this case, we wish to update our display 50 times a second. (Myo provides EMG at 200Hz and IMU data at 50Hz and is unaffected by display rates)
 				hub.run(1);
 				//hub.runOnce();
 				//std::cout << "HUB running!" << std::endl;
 				// After processing events, we call the writeData() function to write new data to our outfile
-				collector.writeData(gestures[i]);
+				collector.writeData(gestures[i]);	//stores user calibration values in TerminatorFile 
 				//std::cout << "Written data!" << std::endl;
 				// Update time for iteration purposes
 				currentTime = GetTickCount() - startTime;
-			}
+				}
 			while ((GetTickCount() - startTime) <= 5000) {}; // wait for 1 extra sec for user change
-		}
+			}
 
 			system("cls"); std::cout << "\t\t Calibrating logged Data..." << std::endl;
 			// Data calibration approach/ machine learning algorithm goes here
@@ -1223,13 +1224,13 @@ int main(int argc, char** argv)
 		
      // Calibration:
 		vector<float> PodScaling (8,0.0);
-		collector.calibrateData();
+		collector.calibrateData(); //establishes reference data, writes user calibration data to TerminatorFile
 		// Data succesfully logged
 		// Calibration complete! listen for gestures for as long as HUTerminator myo remains synced with arm
 		system("cls");
-		collector.scaleData(&PodScaling);
+		collector.scaleData(&PodScaling); //Analyzes TerminatorFile to determine proportions
 		std::cout << "\n\n\n \t\t Now listening for gestures..." << std::endl;
-		collector.listenforGesture(PodScaling);
+		collector.listenforGesture(PodScaling); //need work
 		// Ask to re-calibrate, when re-connected to arm by same or subsequent user
 		string response;
 		cout << "Would You Like To Restart Calibration?";
