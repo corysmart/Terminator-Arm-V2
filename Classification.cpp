@@ -492,10 +492,11 @@ public:
 			// Data calibration approach/ machine learning algorithm goes here
 			std::cout << "\t\t Calibration complete!" << std::endl;
 	}
-	void scaleData(){
+	void scaleData(vector<float> &PodScaling){
+		
 		int counter = 0;
 		float Pod1scale, Pod2scale, Pod3scale, Pod4scale, Pod5scale, Pod6scale, Pod7scale, Pod8scale = 0.0;
-		vector<float> PodScaling (8,0.0);
+		
 		//start data analysis for user calibrated values
 		if (TerminatorFile.is_open(){	//if TerminatorFile is accessible
 			for (int a = 0; a < 12; a++){	//cycles through 12 different gestures (asterisks in file)
@@ -1203,7 +1204,8 @@ int main(int argc, char** argv)
 		// Data succesfully logged
 		// Calibration complete! listen for gestures for as long as HUTerminator myo remains synced with arm
 		system("cls");
-		collector.scaleData();
+		vector<float> PodScaling (8,0.0);
+		collector.scaleData(&PodScaling);
 		std::cout << "\n\n\n \t\t Now listening for gestures..." << std::endl;
 		collector.listenforGesture();
 		// Ask to re-calibrate, when re-connected to arm by same or subsequent user
