@@ -1209,12 +1209,12 @@ int main(int argc, char** argv)
 		collector.listenforGesture(PodScaling);
 		// Ask to re-calibrate, when re-connected to arm by same or subsequent user
 		string response;
-		cout << "Would You Like To Restart Calibration or Continue Listening?";
+		cout << "Would You Like To Restart Calibration?";
 		cin >> response;
 		while response = (Yes || YES || yes || y || Y){
 			collector.calibrateData();
-			collector.listenforGesture();
-			cout << "Would You Like To Restart Calibration or Continue Listening?";
+			collector.listenforGesture(PodScaling);
+			cout << "Would You Like To Restart Calibration?";
 			cin >> response;
 		}
 		else{
