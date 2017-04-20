@@ -165,7 +165,7 @@ public:
 		double temp_var_sq;
 		vector<int> Variance_Data (8);	//vector to hold all of temp_var_sq (for variance)
 	
-		//In this section, we caluclate the varinace for the 8 Pods
+		//In this section, we calculate the varinace for the 8 Pods
 		for(int x = 0; x < RefData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
 			temp_var = RefData_Total.at(x)-Pod1_avg;
 			temp_var_sq = temp_var * temp_var;
