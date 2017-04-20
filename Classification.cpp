@@ -594,8 +594,11 @@ int main(int argc, char** argv)
 		string response;
 		cout << "Would You Like To Restart Calibration or Continue Listening?";
 		cin >> response;
-		if response = (Yes || YES || yes || y || Y){
+		while response = (Yes || YES || yes || y || Y){
 			collector.calibrateData();
+			collector.listenforGesture();
+			cout << "Would You Like To Restart Calibration or Continue Listening?";
+			cin >> response;
 		}
 		else{
 		collector.listenforGesture();
