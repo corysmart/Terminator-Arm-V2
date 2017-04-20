@@ -1034,101 +1034,124 @@ public:
 		       &LivePod1_avg, &LivePod2_avg, &LivePod3_avg, &LivePod4_avg, &LivePod5_avg , &LivePod6_avg,
 		       &LivePod7_avg, &LivePod8_avg, &LivePod1_var, &LivePod2_var, &LivePod3_var, &LivePod4_var, 
 		       &LivePod5_var, &LivePod6_var, &LivePod7_var, &LivePod8_var, &Livetemp, &Livetemp_sq, PodScaling){
-	//50 frame intervals (found active pods, recording data)
-	int Quill, avg_ticker, var_ticker, Livetemp, Livetemp_sq = 0;
-	while (nowTime <= 10000 & pod_found = true){
-		for (int i = 0; i < 8; i++) {
-			Quill = emg[i];
-			LiveData.at(i) = LiveData.at(i) + Quill;
-			LiveData_Total.pushback(Quill);
-			LiveData.at(i) = LiveData.at(i) + Quill;	//Pods summed 
-			avg_ticker++;
-			}
-		//Pods averaged (real time)
-		LivePod1_avg=LiveData.at(0)/avg_ticker;	
-		LivePod2_avg=LiveData.at(1)/avg_ticker;
-		LivePod3_avg=LiveData.at(2)/avg_ticker;
-		LivePod4_avg=LiveData.at(3)/avg_ticker;
-		LivePod5_avg=LiveData.at(4)/avg_ticker;
-		LivePod6_avg=LiveData.at(5)/avg_ticker;
-		LivePod7_avg=LiveData.at(6)/avg_ticker;
-		LivePod8_avg=LiveData.at(7)/avg_ticker;
+		//50 frame intervals (found active pods, recording data)
+		int Quill, avg_ticker, var_ticker, Livetemp, Livetemp_sq = 0;
+		while (nowTime <= 10000 & pod_found = true){
+			for (int i = 0; i < 8; i++) {
+				Quill = emg[i];
+				LiveData.at(i) = LiveData.at(i) + Quill;
+				LiveData_Total.pushback(Quill);
+				LiveData.at(i) = LiveData.at(i) + Quill;	//Pods summed 
+				avg_ticker++;
+				}
+			//Pods averaged (real time)
+			LivePod1_avg=LiveData.at(0)/avg_ticker;	
+			LivePod2_avg=LiveData.at(1)/avg_ticker;
+			LivePod3_avg=LiveData.at(2)/avg_ticker;
+			LivePod4_avg=LiveData.at(3)/avg_ticker;
+			LivePod5_avg=LiveData.at(4)/avg_ticker;
+			LivePod6_avg=LiveData.at(5)/avg_ticker;
+			LivePod7_avg=LiveData.at(6)/avg_ticker;
+			LivePod8_avg=LiveData.at(7)/avg_ticker;
 
-		//Find Pod Variance
-		for(int x = 0; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
-			Livetemp = LiveData_Total.at(x) - LivePod1_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(0) = LiveData_Var.at(0) + Livetemp_sq;	//pools var data for Pod 1
-			var_ticker++;		//keeps track of how many additions occur (how many variances are added)
-			}
-			LivePod1_var = LiveData_Var.at(0)/var_ticker;
-			var_ticker = 0;
-		for(int x = 1; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 2)
-			Livetemp = LiveData_Total.at(x) - LivePod2_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(1) = LiveData_Var.at(1) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod2_var = LiveData_Var.at(1)/var_ticker;
-			var_ticker = 0;
-		for(int x = 2; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 3)
-			Livetemp = LiveData_Total.at(x) - LivePod3_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(2) = LiveData_Var.at(2) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod3_var = LiveData_Var.at(2)/var_ticker;
-			var_ticker = 0;
-		for(int x = 3; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 4)
-			Livetemp = LiveData_Total.at(x) - LivePod4_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(3) = LiveData_Var.at(3) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod4_var = LiveData_Var.at(3)/var_ticker;
-			var_ticker = 0;
-		for(int x = 4; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 5)
-			Livetemp = LiveData_Total.at(x) - LivePod5_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(4) = LiveData_Var.at(4) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod5_var = LiveData_Var.at(4)/var_ticker;
-			var_ticker = 0;
-		for(int x = 5; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 6)
-			Livetemp = LiveData_Total.at(x) - LivePod6_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(5) = LiveData_Var.at(5) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod6_var = LiveData_Var.at(5)/var_ticker;
-			var_ticker = 0;
-		for(int x = 6; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 7)
-			Livetemp = LiveData_Total.at(x) - LivePod7_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(6) = LiveData_Var.at(6) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod7_var = LiveData_Var.at(6)/var_ticker;
-			var_ticker = 0;
-		for(int x = 7; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 8)
-			Livetemp = LiveData_Total.at(x) - LivePod8_avg;
-			Livetemp_sq = Livetemp * Livetemp;
-			LiveData_Var.at(7) = LiveData_Var.at(7) + Livetemp_sq;	
-			var_ticker++;		
-			}
-			LivePod8_var = LiveData_Var.at(7)/var_ticker;
-			var_ticker = 0;
-		
-		LiveData_Var.at(0) = LivePod1_var * PodScaling.at(0);
-		LiveData_Var.at(1) = LivePod2_var * PodScaling.at(1);
-		LiveData_Var.at(2) = LivePod3_var * PodScaling.at(2);
-		LiveData_Var.at(3) = LivePod4_var * PodScaling.at(3);
-		LiveData_Var.at(4) = LivePod5_var * PodScaling.at(4);
-		LiveData_Var.at(5) = LivePod6_var * PodScaling.at(5);
-		LiveData_Var.at(6) = LivePod7_var * PodScaling.at(6);
-		LiveData_Var.at(7) = LivePod8_var * PodScaling.at(7);
-		nowTime = GetTickCount() - beginTime;
+			//Find Pod Variance
+			for(int x = 0; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 1)
+				Livetemp = LiveData_Total.at(x) - LivePod1_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(0) = LiveData_Var.at(0) + Livetemp_sq;	//pools var data for Pod 1
+				var_ticker++;		//keeps track of how many additions occur (how many variances are added)
+				}
+				LivePod1_var = LiveData_Var.at(0)/var_ticker;
+				var_ticker = 0;
+			for(int x = 1; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 2)
+				Livetemp = LiveData_Total.at(x) - LivePod2_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(1) = LiveData_Var.at(1) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod2_var = LiveData_Var.at(1)/var_ticker;
+				var_ticker = 0;
+			for(int x = 2; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 3)
+				Livetemp = LiveData_Total.at(x) - LivePod3_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(2) = LiveData_Var.at(2) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod3_var = LiveData_Var.at(2)/var_ticker;
+				var_ticker = 0;
+			for(int x = 3; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 4)
+				Livetemp = LiveData_Total.at(x) - LivePod4_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(3) = LiveData_Var.at(3) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod4_var = LiveData_Var.at(3)/var_ticker;
+				var_ticker = 0;
+			for(int x = 4; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 5)
+				Livetemp = LiveData_Total.at(x) - LivePod5_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(4) = LiveData_Var.at(4) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod5_var = LiveData_Var.at(4)/var_ticker;
+				var_ticker = 0;
+			for(int x = 5; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 6)
+				Livetemp = LiveData_Total.at(x) - LivePod6_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(5) = LiveData_Var.at(5) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod6_var = LiveData_Var.at(5)/var_ticker;
+				var_ticker = 0;
+			for(int x = 6; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 7)
+				Livetemp = LiveData_Total.at(x) - LivePod7_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(6) = LiveData_Var.at(6) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod7_var = LiveData_Var.at(6)/var_ticker;
+				var_ticker = 0;
+			for(int x = 7; x < LiveData_Total.size(); x + 8){	//grabs every 8th entry (Pod 8)
+				Livetemp = LiveData_Total.at(x) - LivePod8_avg;
+				Livetemp_sq = Livetemp * Livetemp;
+				LiveData_Var.at(7) = LiveData_Var.at(7) + Livetemp_sq;	
+				var_ticker++;		
+				}
+				LivePod8_var = LiveData_Var.at(7)/var_ticker;
+				var_ticker = 0;
+
+			LiveData_Var.at(0) = LivePod1_var * PodScaling.at(0);
+			LiveData_Var.at(1) = LivePod2_var * PodScaling.at(1);
+			LiveData_Var.at(2) = LivePod3_var * PodScaling.at(2);
+			LiveData_Var.at(3) = LivePod4_var * PodScaling.at(3);
+			LiveData_Var.at(4) = LivePod5_var * PodScaling.at(4);
+			LiveData_Var.at(5) = LivePod6_var * PodScaling.at(5);
+			LiveData_Var.at(6) = LivePod7_var * PodScaling.at(6);
+			LiveData_Var.at(7) = LivePod8_var * PodScaling.at(7);
+			
+			//start decision branches
+			if (LiveData_Var.at(0)>20 && LiveData_Var.at(6)>20){	//Pods: 1 and 7
+				//Thumb
+				}
+			if (LiveData_Var.at(0)>20 && LiveData_Var.at(5)>20 && LiveData_Var.at(6)>20
+			    && LiveData_Var.at(7)>20){	//Pods 1, 6, 7 and 8
+				//Index
+				}
+			if (LiveData_Var.at(0)>20 && LiveData_Var.at(5)>20 && LiveData_Var.at(6)>20){	//Pods: 1, 6 and 7
+				//Middle
+				}
+			if (LiveData_Var.at(0)>20 && LiveData_Var.at(1)>20 && LiveData_Var.at(4)>20
+			    && LiveData_Var.at(5) && LiveData_Var.at(6)>20){	//Pods: 1, 2, 5, 6 and 7
+				//Ring
+				}
+			if (LiveData_Var.at(0)>20 && LiveData_Var.at(1)>20 && LiveData_Var.at(5)>20 
+			   `&& LiveData_Var.at(7)){	//Pods: 1, 2, 6 and 8
+				//Pinky
+				}
+			/*if (){	//Pods 
+				//Hand:
+				}*/
+			nowTime = GetTickCount() - beginTime;
 		}
 	}
 
